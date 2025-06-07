@@ -4,12 +4,11 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy.schema import CreateTable
-from getpass import getpass
 import os
 from sqlalchemy.schema import CreateTable
 
-# Solicitar contraseña
-password = getpass("🔐 Ingresa la contraseña de PostgreSQL: ")
+with open("contraseña.txt", "r", encoding="utf-8") as f:
+    password = f.read().strip()
 DATABASE_NAME = "produccion_musical_db"
 DATABASE_URI = f"postgresql://postgres:{password}@localhost:5432/{DATABASE_NAME}"
 

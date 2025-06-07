@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      position: relative; /* Para posicionar el botón de volver */
+    }
+
+    /* Estilo del título */
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    /* Estilo del botón de volver */
+    .back-button {
+      position: absolute;
+      top: 10px;
+      right: 1100px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #6c757d; /* Gris para el botón de volver */
+      cursor: pointer;
+      text-decoration: none; /* Para el enlace */
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Contenedor del formulario */
+    form {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+    }
+
+    /* Estilo de etiquetas */
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    /* Estilo de los select */
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+      background-color: #fafafa;
+      color: #333;
+      margin-bottom: 20px;
+      transition: border-color 0.3s ease;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    /* Estilo de los botones */
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    button[name="formato"][value="csv"] {
+      background-color: #28a745;
+    }
+
+    button[name="formato"][value="json"] {
+      background-color: #007bff;
+    }
+
+    button[name="formato"][value="pdf"] {
+      background-color: #dc3545;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    /* Contenedor de botones */
+    .button-group {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Responsividad */
+    @media (max-width: 480px) {
+      form {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      button {
+        width: 100%;
+        margin-right: 0;
+      }
+
+      .back-button {
+        font-size: 12px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/../canciones" class="back-button">⬅ Volver</a>
+    <h1>📊 Reporte de Canciones</h1>
+    <form method="get">
+      <label>Artista:</label>
+      <select name="artista">
+        <option value="">Todos</option>
+        {% for a in artistas %}
+          <option value="{{ a }}">{{ a }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Álbum:</label>
+      <select name="album">
+        <option value="">Todos</option>
+        {% for a in albumes %}
+          <option value="{{ a }}">{{ a }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Género:</label>
+      <select name="genero">
+        <option value="">Todos</option>
+        {% for g in generos %}
+          <option value="{{ g }}">{{ g }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Clave:</label>
+      <select name="clave">
+        <option value="">Todas</option>
+        {% for c in claves %}
+          <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </select>
+
+      <label>Duración:</label>
+      <select name="duracion">
+        <option value="">Todas</option>
+        <option value="3">3 minutos</option>
+        <option value="4">4 minutos</option>
+        <option value="5">5 minutos</option>
+      </select>
+
+      <div class="button-group">
+        <button name="formato" value="csv">📥 Exportar CSV</button>
+        <button name="formato" value="json">📥 Exportar JSON</button>
+        <button name="formato" value="pdf">📥 Exportar PDF</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

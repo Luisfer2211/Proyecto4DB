@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📝 Reseñas</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Inter', 'Arial', sans-serif; /* Fuente más moderna */
+      background: linear-gradient(135deg, #e6f0fa 0%, #f4f6f9 100%); /* Fondo degradado */
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    /* Estilo del título */
+    h1 {
+      font-size: 28px;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 50px; /* Espacio para el botón de volver */
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    h1::before {
+      content: '📝';
+      font-size: 32px;
+    }
+
+    /* Estilo del botón de volver */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #6c757d, #868e96); /* Degradado para más estilo */
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button::before {
+      content: '⬅';
+      font-size: 18px;
+    }
+
+    /* Estilo de la tabla */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background: linear-gradient(90deg, #2c3e50, #34495e); /* Degradado en encabezados */
+      color: #fff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      color: #333;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    tr:hover {
+      background-color: #e9f1ff;
+      transition: background-color 0.2s ease;
+    }
+
+    /* Estilo de la columna de texto (reseñas) */
+    td:nth-child(7) {
+      max-width: 300px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; /* Para reseñas largas */
+    }
+
+    /* Estilo de los botones de acciones */
+    .actions button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #dc3545, #e74c3c); /* Degradado rojo */
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .actions button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .actions button::before {
+      content: '🗑️';
+      font-size: 16px;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+        margin-top: 60px;
+      }
+
+      th, td {
+        padding: 10px;
+        font-size: 13px;
+      }
+
+      .back-button {
+        padding: 10px 18px;
+        font-size: 14px;
+      }
+
+      .actions button {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .actions button {
+        width: 100%;
+        margin-bottom: 8px;
+        justify-content: center;
+      }
+
+      td:nth-child(7) {
+        max-width: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-button">Volver al inicio</a>
+    <h1>Reseñas</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Crítico</th>
+          <th>Artista</th>
+          <th>Álbum</th>
+          <th>Año</th>
+          <th>Puntaje</th>
+          <th>Texto</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in resenas %}
+        <tr>
+          <td>{{ r.resena_id }}</td>
+          <td>{{ r.critico }}</td>
+          <td>{{ r.artista }}</td>
+          <td>{{ r.album }}</td>
+          <td>{{ r.anio }}</td>
+          <td>{{ r.puntaje }}</td>
+          <td>{{ r.texto }}</td>
+          <td class="actions">
+            <form action="{{ url_for('crud_resenas.eliminar_resena', id=r.resena_id) }}" method="POST" style="display:inline;">
+              <button type="submit">Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

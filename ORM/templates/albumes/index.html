@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎧 Álbumes</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Inter', 'Arial', sans-serif; /* Fuente moderna con fallback */
+      background: linear-gradient(135deg, #e6f0fa 0%, #f4f6f9 100%); /* Degradado suave */
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      position: relative; /* Para el botón de volver */
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    /* Estilo del título */
+    h1 {
+      font-size: 28px;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 50px; /* Espacio para el botón de volver */
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    h1::before {
+      content: '🎧';
+      font-size: 32px;
+    }
+
+    /* Estilo del botón de volver */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #6c757d, #868e96); /* Degradado gris */
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button::before {
+      content: '⬅';
+      font-size: 18px;
+    }
+
+    /* Estilo de la tabla */
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    th, td {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background: linear-gradient(90deg, #2c3e50, #34495e); /* Degradado en encabezados */
+      color: #fff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      color: #333;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    tr:hover {
+      background-color: #e9f1ff;
+      transition: background-color 0.2s ease;
+    }
+
+    /* Estilo para la columna de Promedio Puntaje */
+    td:nth-child(6) {
+      font-weight: 600;
+      color: #007bff; /* Azul para destacar el puntaje */
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+        margin-top: 60px;
+      }
+
+      th, td {
+        padding: 10px;
+        font-size: 13px;
+      }
+
+      .back-button {
+        padding: 10px 18px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .back-button {
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-button">Volver al inicio</a>
+    <h1>Álbumes</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Título</th>
+          <th>Año</th>
+          <th>Artista</th>
+          <th>Total Canciones</th>
+          <th>Promedio Puntaje</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in albumes %}
+        <tr>
+          <td>{{ a.album_id }}</td>
+          <td>{{ a.titulo_album }}</td>
+          <td>{{ a.anio }}</td>
+          <td>{{ a.artista }}</td>
+          <td>{{ a.total_canciones }}</td>
+          <td>{{ "%.2f"|format(a.promedio_puntaje or 0) }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

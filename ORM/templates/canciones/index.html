@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎶 Canciones</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      text-align: center;
+      position: relative; /* Para el botón de volver */
+    }
+
+    /* Estilo del título */
+    h1 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+      margin-top: 50px; /* Espacio para el botón de volver */
+    }
+
+    /* Estilo del botón de volver */
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(45deg, #6c757d, #868e96); /* Degradado igual al de reseñas */
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button::before {
+      content: '⬅';
+      font-size: 18px;
+    }
+
+    /* Botón de Ver Reporte y Agregar Canción */
+    .top-buttons {
+      display: flex;
+      justify-content: center; /* Centrar el botón de reporte */
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px; /* Espacio entre botones */
+    }
+
+    .top-buttons a, .top-buttons button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+
+    .top-buttons a {
+      background-color: #4CAF50; /* Verde para Ver Reporte */
+    }
+
+    .top-buttons a:hover {
+      background-color: #45a049;
+    }
+
+    .top-buttons button {
+      background-color: #007bff; /* Azul para Agregar Canción */
+    }
+
+    .top-buttons button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Estilo de la tabla */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      font-size: 14px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #333;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Estilo de inputs y selects */
+    .edit-input, select, input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      background-color: #fafafa;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+    .edit-input:focus, select:focus, input[type="text"]:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    select:disabled, input:disabled {
+      background-color: #eee;
+      border-color: #ddd;
+      cursor: not-allowed;
+    }
+
+    /* Estilo de los botones de acciones */
+    .actions button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      margin-right: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .actions button[onclick*="habilitarEdicion"] {
+      background-color: #ffc107; /* Amarillo para Editar */
+    }
+
+    .actions button[onclick*="guardarCambios"], .actions button[onclick*="guardarNuevaCancion"] {
+      background-color: #28a745; /* Verde para Guardar */
+    }
+
+    .actions button.delete {
+      background-color: #dc3545; /* Rojo para Eliminar */
+    }
+
+    .actions button:hover {
+      opacity: 0.9;
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 20px;
+        margin-top: 60px; /* Más espacio para el botón de volver */
+      }
+
+      .top-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .top-buttons a, .top-buttons button {
+        width: 100%;
+        text-align: center;
+      }
+
+      table {
+        font-size: 12px;
+      }
+
+      th, td {
+        padding: 8px;
+      }
+
+      .actions button {
+        padding: 6px 8px;
+        font-size: 12px;
+      }
+
+      .back-button {
+        padding: 10px 18px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+
+      .actions button {
+        width: 100%;
+        margin-bottom: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back-button">Volver al inicio</a>
+    <div class="top-buttons">
+      <a href="{{ url_for('crud_canciones.reporte_canciones') }}">📊 Ver Reporte de Canciones</a>
+      <button onclick="agregarFilaCancion()">➕ Agregar nueva canción</button>
+    </div>
+    <h1>🎶 Canciones</h1>
+    <table id="tabla-canciones">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Artista</th>
+          <th>Álbum</th>
+          <th>Género</th>
+          <th>Duración</th>
+          <th>Clave</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in canciones %}
+        <tr data-id="{{ c.cancion_id }}">
+          <td>{{ c.cancion_id }}</td>
+          <td><input type="text" value="{{ c.nombre_cancion }}" class="edit-input" data-field="nombre" disabled></td>
+          <td>
+            <select class="edit-input" data-field="artista" onchange="actualizarAlbumes(this)" disabled>
+              {% for a in artistas %}
+                <option value="{{ a['id'] }}" {% if a['nombre'] == c.artista %}selected{% endif %}>{{ a['nombre'] }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td>
+            <select class="edit-input" data-field="album" disabled>
+              {% for album in artista_album_map[c.artista_id|string] %}
+                <option value="{{ album['id'] }}" {% if album['nombre'] == c.album or album['titulo'] == c.album %}selected{% endif %}>{{ album['nombre'] or album['titulo'] }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td>
+            <select class="edit-input" data-field="genero" disabled>
+              {% for g in generos %}
+                <option value="{{ g['id'] }}" {% if g['nombre'] == c.genero %}selected{% endif %}>{{ g['nombre'] }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td>{{ c.duracion }}</td>
+          <td>{{ c.clave }}</td>
+          <td class="actions">
+            <button onclick="habilitarEdicion(this)">✏️ Editar</button>
+            <button onclick="guardarCambios(this)">💾 Guardar</button>
+            <form action="{{ url_for('crud_canciones.eliminar_cancion', id=c.cancion_id) }}" method="POST" style="display:inline;">
+              <button type="submit" class="delete">🗑️ Eliminar</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const artistaAlbumMap = {{ artista_album_map | default({}) | tojson | safe }};
+    const artistasData = {{ artistas | default([]) | tojson | safe }};
+    const albumesData = {{ albumes | default([]) | tojson | safe }};
+    const clavesMusicales = {{ claves | default([]) | tojson | safe }};
+    const generosData = {{ generos | default([]) | tojson | safe }};
+
+    function habilitarEdicion(btn) {
+      const row = btn.closest('tr');
+      row.querySelectorAll('.edit-input').forEach(input => input.disabled = false);
+    }
+
+    function actualizarAlbumes(selectArtista) {
+      const row = selectArtista.closest('tr');
+      const albumSelect = row.querySelector('[data-field="album"]');
+      const artistaId = selectArtista.value;
+      const albums = artistaAlbumMap[artistaId] || [];
+
+      albumSelect.innerHTML = '';
+      if (albums.length === 0) {
+        albumSelect.innerHTML = '<option value="">(Sin álbumes)</option>';
+      } else {
+        albums.forEach(album => {
+          const opt = document.createElement('option');
+          opt.value = album.id;
+          opt.text = album.nombre || album.titulo;
+          albumSelect.appendChild(opt);
+        });
+      }
+    }
+
+    function guardarCambios(btn) {
+      const row = btn.closest('tr');
+      const id = row.dataset.id;
+      const datos = {};
+      row.querySelectorAll('.edit-input').forEach(elem => {
+        datos[elem.dataset.field] = elem.value;
+      });
+
+      fetch(`/canciones/actualizar_en_linea/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+      }).then(resp => {
+        if (resp.ok) {
+          alert("✅ Canción actualizada");
+          row.querySelectorAll('.edit-input').forEach(input => input.disabled = true);
+        } else {
+          alert("❌ Error al guardar");
+        }
+      });
+    }
+
+    function agregarFilaCancion() {
+      const table = document.getElementById("tabla-canciones").querySelector("tbody");
+      const row = table.insertRow(-1);
+
+      const artistaIdInicial = artistasData.length > 0 ? artistasData[0].id.toString() : '';
+      const albumsIniciales = artistaAlbumMap[artistaIdInicial] || [];
+      const claveDefault = 'C';
+
+      row.innerHTML = `
+        <td>Nuevo</td>
+        <td><input type="text" id="nuevo-nombre"></td>
+        <td>
+          <select id="nuevo-artista" onchange="actualizarAlbumsNuevo()">
+            ${artistasData.map(a => `<option value="${a.id}">${a.nombre}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <select id="nuevo-album">
+            ${albumsIniciales.map(a => `<option value="${a.id}">${a.nombre || a.titulo}</option>`).join('')}
+          </select>
+        </td>
+        <td>
+          <select id="nuevo-genero">
+            <option value="">(Sin género)</option>
+            ${generosData.map(g => `<option value="${g.nombre}">${g.nombre}</option>`).join('')}
+          </select>
+        </td>
+        <td><input type="text" id="nuevo-duracion" value="00:03:30" readonly></td>
+        <td>
+          <select id="nuevo-clave">
+            ${clavesMusicales.map(c => `<option value="${c}" ${c === claveDefault ? 'selected' : ''}>${c}</option>`).join('')}
+          </select>
+        </td>
+        <td><button onclick="guardarNuevaCancion()">💾 Guardar</button></td>
+      `;
+
+      actualizarAlbumsNuevo();
+    }
+
+    function actualizarAlbumsNuevo() {
+      const artistaId = document.getElementById("nuevo-artista").value;
+      const albumSelect = document.getElementById("nuevo-album");
+
+      const albums = artistaAlbumMap[artistaId] || [];
+      albumSelect.innerHTML = albums.map(a => `<option value="${a.id}">${a.nombre || a.titulo}</option>`).join('');
+    }
+
+    function guardarNuevaCancion() {
+      const data = {
+        nombre: document.getElementById("nuevo-nombre").value,
+        artista_id: document.getElementById("nuevo-artista").value,
+        album_id: document.getElementById("nuevo-album").value,
+        genero_nombre: document.getElementById("nuevo-genero").value,
+        duracion: document.getElementById("nuevo-duracion").value,
+        clave: document.getElementById("nuevo-clave").value
+      };
+
+      fetch("/canciones/crear_ajax", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then(resp => {
+        if (resp.mensaje) {
+          alert("✅ Canción guardada");
+          location.reload();
+        } else {
+          alert("❌ Error: " + resp.error);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

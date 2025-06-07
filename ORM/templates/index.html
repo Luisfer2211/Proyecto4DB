@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Producción Musical</title>
+  <style>
+    /* Estilos generales */
+    body {
+      font-family: 'Inter', 'Arial', sans-serif; /* Fuente moderna con fallback */
+      background: linear-gradient(135deg, #e6f0fa 0%, #f4f6f9 100%); /* Degradado suave */
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center; /* Centrado vertical */
+      min-height: 100vh;
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+    }
+
+    /* Estilo del título */
+    h1 {
+      font-size: 32px;
+      color: #1a1a1a;
+      margin-bottom: 40px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    h1::before {
+      content: '🎵';
+      font-size: 36px;
+    }
+
+    /* Estilo de la lista de enlaces */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    li a {
+      display: block;
+      padding: 15px 20px;
+      background: linear-gradient(45deg, #007bff, #00aaff); /* Degradado azul */
+      color: #fff;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    li a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(45deg, #0056b3, #0088cc);
+    }
+
+    li a::before {
+      font-size: 20px;
+    }
+
+    li a[href*="canciones"]::before {
+      content: '🎶';
+    }
+
+    li a[href*="resenas"]::before {
+      content: '📝';
+    }
+
+    li a[href*="albumes"]::before {
+      content: '🎧';
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      li a {
+        font-size: 16px;
+        padding: 12px 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      li a {
+        font-size: 14px;
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Producción Musical</h1>
+    <ul>
+      <li><a href="{{ url_for('canciones') }}">Ver Canciones</a></li>
+      <li><a href="{{ url_for('resenas') }}">Ver Reseñas</a></li>
+      <li><a href="{{ url_for('albumes') }}">Ver Álbumes</a></li>
+    </ul>
+  </div>
+</body>
+</html>

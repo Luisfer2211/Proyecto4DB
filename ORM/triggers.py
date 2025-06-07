@@ -1,8 +1,8 @@
 from sqlalchemy import create_engine, text
 from getpass import getpass
 
-# 🔐 Pedir la contraseña una sola vez
-password = getpass("🔐 Ingresa la contraseña de PostgreSQL: ")
+with open("contraseña.txt", "r", encoding="utf-8") as f:
+    password = f.read().strip()
 DATABASE_URI = f"postgresql://postgres:{password}@localhost:5432/produccion_musical_db"
 engine = create_engine(DATABASE_URI)
 
